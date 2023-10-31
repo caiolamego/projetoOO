@@ -1,10 +1,10 @@
 package negocio;
 
 public abstract class Usuario {
-	private String nome;
-	private String endereco;
-	private String email;
-	private String senha;
+	protected String nome;
+	protected String endereco;
+	protected String email;
+	protected String senha;
 	private Reclamacao[] reclamacao;
 	
 	public Usuario(String nome, String endereco, String email, String senha) {
@@ -12,6 +12,10 @@ public abstract class Usuario {
 		this.endereco = endereco;
 		this.email = email;
 		this.senha = senha;
+	}
+	
+	public Usuario() {
+		
 	}
 
 	public String getNome() {
@@ -45,6 +49,9 @@ public abstract class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public abstract String exibirDados();
+	
 	
 	
 	

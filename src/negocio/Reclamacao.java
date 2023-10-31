@@ -1,7 +1,10 @@
 package negocio;
 
-public class Reclamacao {
+import java.util.Scanner;
 
+public class Reclamacao {
+	
+	Scanner sc = new Scanner(System.in); 
 	private String nomeEmpresa;
 	private String titulo;
 	private String descricao;
@@ -21,6 +24,9 @@ public class Reclamacao {
 		this.produtoOuServico = produtoOuServico;
 		this.status = status;
 		this.nota = nota;
+	}
+	
+	public Reclamacao() {
 	}
 
 	public String getNomeEmpresa() {
@@ -86,6 +92,22 @@ public class Reclamacao {
 	public void setNota(double nota) {
 		this.nota = nota;
 	}
+	
+	public void criarReclamacao(String titulo, String descricao, String nomeEmpresa, String classificacao, String produtoOuServico, double nota) {
+		System.out.print("Crie um titulo para sua reclamacao:");
+		titulo = sc.nextLine();
+		System.out.print("Faça uma decricao sobre sua reclamacao: ");
+		descricao = sc.nextLine();
+		System.out.print("Cite o nome da empresa que deseja reclamar: ");
+		nomeEmpresa = sc.nextLine();
+		System.out.print("Classifique sua reclamacao (Ex: produto errado, comida gelada)");
+		classificacao = sc.nextLine();
+		System.out.print("Cite o produto ou serviço reclamado (Ex: Malas, Suco, Atendimento, etc.)");
+		produtoOuServico = sc.nextLine();
+		System.out.println("De uma nota de a 0 - 10 para o serviço, podendo conter até um digito decimal!");
+		nota = sc.nextDouble();
+	}
+
 	
 	
 	
