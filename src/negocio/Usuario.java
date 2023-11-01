@@ -1,21 +1,32 @@
 package negocio;
 
+import java.util.ArrayList;
+
 public abstract class Usuario {
-	protected String nome;
-	protected String endereco;
-	protected String email;
-	protected String senha;
-	private Reclamacao[] reclamacao;
+	private String nome;
+	private String endereco;
+	private String email;
+	private String senha;
+	private ArrayList<Reclamacao> reclamacao;
 	
-	public Usuario(String nome, String endereco, String email, String senha) {
+	public Usuario(String nome, String endereco, String email, String senha, ArrayList<Reclamacao> reclamacao) {
 		this.nome = nome;
 		this.endereco = endereco;
 		this.email = email;
 		this.senha = senha;
+		this.reclamacao = reclamacao;
 	}
 	
 	public Usuario() {
 		
+	}
+
+	public ArrayList<Reclamacao> getReclamacao() {
+		return reclamacao;
+	}
+
+	public void setReclamacao(ArrayList<Reclamacao> reclamacao) {
+		this.reclamacao = reclamacao;
 	}
 
 	public String getNome() {

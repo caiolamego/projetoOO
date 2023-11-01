@@ -1,47 +1,67 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Conta {
-	private UsuarioConsumidor[] consumidor;
-	private UsuarioEmpresa[] empresa;
-	private static List<Usuario> contasExistentes = new ArrayList<>();
+	private ArrayList<UsuarioEmpresa> empresasExistentes;
+	private ArrayList<UsuarioConsumidor> consumidoresExistentes;
+	private ArrayList<Usuario> contasExistentes;
 	
-	public Conta(UsuarioConsumidor[] consumidor, UsuarioEmpresa[] empresa, List<Usuario> contasExistentes) {
-		this.consumidor = consumidor;
-		this.empresa = empresa;
-		Conta.contasExistentes = contasExistentes;
-	}
 	
-	public Conta(List<Usuario> contasExistentes) {
-		Conta.contasExistentes = contasExistentes;
+	
+	public Conta() {
+		this.empresasExistentes = new ArrayList<UsuarioEmpresa>();
+		this.consumidoresExistentes = new ArrayList<UsuarioConsumidor>();
+		this.contasExistentes = new ArrayList<Usuario>();
 	}
 
-	public UsuarioConsumidor[] getConsumidor() {
-		return consumidor;
+	
+
+	public ArrayList<UsuarioEmpresa> getEmpresasExistentes() {
+		return empresasExistentes;
 	}
 
-	public void setConsumidor(UsuarioConsumidor[] consumidor) {
-		this.consumidor = consumidor;
+
+
+	public void setEmpresasExistentes(ArrayList<UsuarioEmpresa> empresasExistentes) {
+		this.empresasExistentes = empresasExistentes;
 	}
 
-	public UsuarioEmpresa[] getEmpresa() {
-		return empresa;
+
+
+	public ArrayList<UsuarioConsumidor> getConsumidoresExistentes() {
+		return consumidoresExistentes;
 	}
 
-	public void setEmpresa(UsuarioEmpresa[] empresa) {
-		this.empresa = empresa;
+
+
+	public void setConsumidoresExistentes(ArrayList<UsuarioConsumidor> consumidoresExistentes) {
+		this.consumidoresExistentes = consumidoresExistentes;
 	}
 
-	public static List<Usuario> getContasExistentes() {
+
+
+	public ArrayList<Usuario> getContasExistentes() {
 		return contasExistentes;
 	}
 
-	public void setContasExistentes(List<Usuario> contasExistentes) {
-		Conta.contasExistentes = contasExistentes;
+
+
+	public void setContasExistentes(ArrayList<Usuario> contasExistentes) {
+		this.contasExistentes = contasExistentes;
 	}
-	
+
+
+
+	public void preencherDados() {
+		for(int i = 0; i < 10; i++) {
+			String s = String.valueOf(i);
+			UsuarioEmpresa usuario = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"NomeComercial" + s, 
+					"CNPJ" + s,"Site" + s,"NomeResponsavel" + s,"EmailResponsavel" + s);		
+			empresasExistentes.add(usuario);
+		}
+		
+	}
 	
 	
 	
