@@ -107,7 +107,7 @@ public class UsuarioEmpresa extends Usuario{
 
 	@Override
 	public String toString() {
-		return "UsuarioEmpresa [nomeComercial=" + nomeComercial + ", cnpj=" + cnpj + ", site=" + site
+		return "UsuarioEmpresa [nome =" + nome + "nomeComercial=" + nomeComercial + ", cnpj=" + cnpj + ", site=" + site
 				+ ", nomeResponsavel=" + nomeResponsavel + ", emailResponsavel=" + emailResponsavel + "]";
 	}
 	

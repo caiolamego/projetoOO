@@ -56,9 +56,13 @@ public class Conta {
 	public void preencherDados() {
 		for(int i = 0; i < 10; i++) {
 			String s = String.valueOf(i);
-			UsuarioEmpresa usuario = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"NomeComercial" + s, 
+			char g = 'g';
+			UsuarioEmpresa empresa = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"NomeComercial" + s, 
 					"CNPJ" + s,"Site" + s,"NomeResponsavel" + s,"EmailResponsavel" + s);		
-			empresasExistentes.add(usuario);
+			empresasExistentes.add(empresa);
+			UsuarioConsumidor  consumidor = new UsuarioConsumidor("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"Cpf" + s, 
+					"DataNascimento" + s, g,"Celular" + s);
+			consumidoresExistentes.add(consumidor);
 		}
 		
 	}

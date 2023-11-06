@@ -3,7 +3,7 @@ package negocio;
 import java.util.ArrayList;
 
 public abstract class Usuario {
-	private String nome;
+	protected String nome;
 	private String endereco;
 	private String email;
 	private String senha;

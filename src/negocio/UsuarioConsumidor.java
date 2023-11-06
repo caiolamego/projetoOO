@@ -75,5 +75,19 @@ public class UsuarioConsumidor extends Usuario{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "UsuarioConsumidor [cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", genero=" + genero
+				+ ", celular=" + celular + ", nome=" + nome + "]";
+	}
+	
+	
+	
+	
+	
+	
 	
 }

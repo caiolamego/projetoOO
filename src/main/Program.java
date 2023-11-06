@@ -19,9 +19,14 @@ public class Program {
 		for(int i = 0; i < conta.getEmpresasExistentes().size(); i++) {
 			System.out.println(conta.getEmpresasExistentes().get(i).toString());
 		}
+		
+		System.out.println();
+		
+		for(int i = 0; i < conta.getEmpresasExistentes().size(); i++) {
+			System.out.println(conta.getConsumidoresExistentes().get(i).toString());
+		}
 
-		
-		
+
 		
 		
 		
