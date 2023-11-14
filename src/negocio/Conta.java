@@ -3,7 +3,7 @@ package negocio;
 import java.util.ArrayList;
 
 public class Conta {
-	private ArrayList<UsuarioEmpresa> empresasExistentes;
+	private static ArrayList<UsuarioEmpresa> empresasExistentes;
 	private ArrayList<UsuarioConsumidor> consumidoresExistentes;
 	private ArrayList<Usuario> contasExistentes;
 	

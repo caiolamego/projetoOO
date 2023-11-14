@@ -80,8 +80,9 @@ public class UsuarioConsumidor extends Usuario{
 
 	@Override
 	public String toString() {
-		return "UsuarioConsumidor [cpf=" + cpf + ", dataNascimento=" + dataNascimento + ", genero=" + genero
-				+ ", celular=" + celular + ", nome=" + nome + "]";
+		return "UsuarioConsumidor [Nome = " + nome + ", Endereco = " + endereco + ", Email = " + email
+				+ ", Senha = " + senha + ", CPF = " + cpf + ", DataNascimento = " + dataNascimento + ", Genero = " + genero
+				+ ", Celular = " + celular + "]";
 	}
 	
 	

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Usuario {
 	protected String nome;
-	private String endereco;
-	private String email;
-	private String senha;
+	protected String endereco;
+	protected String email;
+	protected String senha;
 	private ArrayList<Reclamacao> reclamacao;
 	
 	public Usuario(String nome, String endereco, String email, String senha, ArrayList<Reclamacao> reclamacao) {
