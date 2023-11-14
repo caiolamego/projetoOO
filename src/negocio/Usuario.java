@@ -1,6 +1,7 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Usuario {
 	protected String nome;
@@ -15,12 +16,13 @@ public abstract class Usuario {
 		this.email = email;
 		this.senha = senha;
 		this.reclamacao = reclamacao;
+		this.reclamacao = new ArrayList<>(reclamacao);;
 	}
 	
 	public Usuario() {
 		
 	}
-
+//
 	public ArrayList<Reclamacao> getReclamacao() {
 		return reclamacao;
 	}
@@ -28,7 +30,15 @@ public abstract class Usuario {
 	public void setReclamacao(ArrayList<Reclamacao> reclamacao) {
 		this.reclamacao = reclamacao;
 	}
+//
+	public List<Reclamacao> getReclamacoes() {
+        return new ArrayList<>(reclamacao);
+    }
 
+    public void adicionarReclamacao(Reclamacao reclamacao) {
+        this.reclamacao.add(reclamacao);
+    }
+//
 	public String getNome() {
 		return nome;
 	}
@@ -62,11 +72,4 @@ public abstract class Usuario {
 	}
 	
 	public abstract String exibirDados();
-	
-	
-	
-	
-	
-	
-	
 }

@@ -2,7 +2,7 @@ package main;
 
 import java.util.Scanner;
 
-import negocio.Conta;
+import dados.Conta;
 import negocio.UsuarioConsumidor;
 import negocio.UsuarioEmpresa;
 
