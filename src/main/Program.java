@@ -1,8 +1,10 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import dados.Conta;
+import negocio.Reclamacao;
 import negocio.UsuarioConsumidor;
 import negocio.UsuarioEmpresa;
 
@@ -12,10 +14,11 @@ public class Program {
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-
+		//teste 
+		Reclamacao reclamacao = new Reclamacao("Nome9", "TITULO", null, null, null, null, "Pendente", 0);
 		conta.preencherDados();
 		int op = -1;
-
+		int op2 = -1;
 		while (op != 0) {
 			System.out.println(imprimirMenuLogin());
 			op = sc.nextInt();
@@ -47,11 +50,8 @@ public class Program {
 				}
 
 			case 3:
-				boolean loginEmp = loginEmpresa();
-				if (loginEmp == true) {
-					op = 0;
-					break;
-				} else {
+				UsuarioEmpresa empresa = loginEmpresa();
+				if (empresa == null) {
 					System.out.println("CNPJ e/ou Senha incorreto(s)!");
 					System.out.println("Deseja retornar ao menu (y/n)?");
 					if (sc.next().charAt(0) == 'y') {
@@ -61,6 +61,68 @@ public class Program {
 						System.out.println("O sistema sera encerrado!");
 						break;
 					}
+				} else {
+					while (op2 != 0) {
+						System.out.println(imprimirOpcoesEmpresa());
+						//teste 
+						empresa.getReclamacao().add(reclamacao);
+						op2 = sc.nextInt();
+						switch (op2) {
+						case 0:
+							System.out.println("Obrigado, " + empresa.getNome() + "! Deseja voltar ao menu incial?");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+							
+						case 1:
+							System.out.println("Digite o numero corrspondente a sua escolha para filtragem: \n"
+									+ "1 - Respondidas \n"
+									+ "2 - Pendentes");
+							int filtro = sc.nextInt();
+							if(filtro == 1) {
+								empresa.filtrarReclamacoesResp();
+							} else if (filtro == 2) {
+								empresa.filtrarReclamacoesNResp();
+							} else {
+								System.out.println("Opcao invalida!");
+							}
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+							}
+							
+						case 2:
+							conta.listarReclamacoesDaEmpresa(empresa.getNome());
+							sc.next();
+							break;
+							
+						case 3:
+							System.out.println("Escreva o titulo da Reclamacao:");
+							String titulo = sc.next();
+							System.out.println();
+							System.out.println("Escreva a resposta para a Reclamacao:");
+							String resposta = sc.next();
+							System.out.println();
+							empresa.responderReclamacao(titulo, resposta);
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+							}
+						}
+					}
+					break;
 				}
 
 			case 4:
@@ -129,7 +191,7 @@ public class Program {
 		emailResponsavel = sc.nextLine();
 		System.out.println("Crie uma senha de 8 digitos:");
 		senha = sc.nextLine();
-		UsuarioEmpresa empresa = new UsuarioEmpresa(nome, endereco, email, senha, null, nomeComercial, cnpj, site,
+		UsuarioEmpresa empresa = new UsuarioEmpresa(nome, endereco, email, senha, new ArrayList<Reclamacao>(), nomeComercial, cnpj, site,
 				nomeResponsavel, emailResponsavel);
 		return empresa;
 	}
@@ -196,7 +258,7 @@ public class Program {
 		}
 	}
 
-	public static boolean loginEmpresa() {
+	public static UsuarioEmpresa loginEmpresa() {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("CNPJ (apenas os 14 digitos): ");
@@ -208,10 +270,10 @@ public class Program {
 		for (UsuarioEmpresa empresa : conta.getEmpresasExistentes()) {
 			if (cnpjLogin.equals(empresa.getCnpj()) && senhaLogin.equals(empresa.getSenha())) {
 
-				return true;
+				return empresa;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public static boolean loginConsumidor() {
@@ -229,6 +291,16 @@ public class Program {
 			}
 		}
 		return false;
+	}
+
+	public static String imprimirOpcoesEmpresa() {
+		String opcoesEmpresa = new String("Digite o valor correspondente para a opcao que deseja realizar: \n");
+		opcoesEmpresa = opcoesEmpresa + "0 - Sair da conta \n";
+		opcoesEmpresa = opcoesEmpresa + "1 - Filtrar Reclamacao \n";
+		opcoesEmpresa = opcoesEmpresa + "2 - Listar Reclamacoes \n";
+		opcoesEmpresa = opcoesEmpresa + "3 - Responder Reclamacao \n";
+		opcoesEmpresa = opcoesEmpresa + "4 - Ver Reclamacao";
+		return opcoesEmpresa;
 	}
 
 }

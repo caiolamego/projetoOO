@@ -121,10 +121,10 @@ public class Conta {
 		for(int i = 0; i < 10; i++) {
 			String s = String.valueOf(i);
 			char g = 'g';
-			UsuarioEmpresa empresa = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"NomeComercial" + s, 
+			UsuarioEmpresa empresa = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, new ArrayList<Reclamacao>(),"NomeComercial" + s, 
 					"CNPJ" + s,"Site" + s,"NomeResponsavel" + s,"EmailResponsavel" + s);		
 			empresasExistentes.add(empresa);
-			UsuarioConsumidor  consumidor = new UsuarioConsumidor("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, null,"Cpf" + s, 
+			UsuarioConsumidor  consumidor = new UsuarioConsumidor("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, new ArrayList<Reclamacao>(),"Cpf" + s, 
 					"DataNascimento" + s, g,"Celular" + s);
 			consumidoresExistentes.add(consumidor);
 		}

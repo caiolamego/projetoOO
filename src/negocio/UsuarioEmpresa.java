@@ -111,6 +111,52 @@ public class UsuarioEmpresa extends Usuario{
 				+ ", Senha = " + senha + ", NomeComercial = " + nomeComercial + ", CNPJ = " + cnpj + ", Site = " + site
 				+ ", NomeResponsavel = " + nomeResponsavel + ", EmailResponsavel = " + emailResponsavel + "]";
 	}
+
+
+
+
+	@Override
+	public String filtrarReclamacoesResp() {
+		String filtro = "";
+		for(int i = 0; i < reclamacao.size(); i++) {
+			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Respondida")) {
+				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
+			}
+		}
+		if(filtro == "") {
+			return "Nao ha reclamacoes respondidas";
+		} else {
+			return filtro;
+		}
+	}
+
+
+
+
+	@Override
+	public String filtrarReclamacoesNResp() {
+		String filtro = "";
+		for(int i = 0; i < reclamacao.size(); i++) {
+			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Pendente")) {
+				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
+			}
+		}
+		if(filtro == "") {
+			return "Nao ha reclamacoes pendentes";
+		} else {
+			return filtro;
+		}
+	}
+	
+	public String responderReclamacao(String titulo, String resposta) {
+		for(int i = 0; i < reclamacao.size(); i++) {
+			if(reclamacao.get(i).getTitulo().equals(titulo) && reclamacao.get(i).getStatus().equals("Pendente")) {
+				reclamacao.get(i).setStatus("Repondida");;
+				return "RESPOSTA: " + resposta + "\n Reclamacao respondida com sucesso!";
+			}
+		}
+		return "Reclamacao nao encontrada";
+	}
 	
 	
 	

@@ -9,8 +9,9 @@ public class Reclamacao {
 	private String celular;
 	private String classificacao;
 	private String produtoOuServico;
-	private String status;
+	private String status = "Pendente";
 	private double nota;
+
 	
 	public Reclamacao(String nomeEmpresa, String titulo, String descricao, String celular, String classificacao,
 			String produtoOuServico, String status, double nota) {
@@ -72,6 +73,8 @@ public class Reclamacao {
 		this.produtoOuServico = produtoOuServico;
 	}
 
+	
+
 	public String getStatus() {
 		return status;
 	}
@@ -87,6 +90,7 @@ public class Reclamacao {
 	public void setNota(double nota) {
 		this.nota = nota;
 	}
+	
 	
 	
 	

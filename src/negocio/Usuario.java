@@ -8,7 +8,7 @@ public abstract class Usuario {
 	protected String endereco;
 	protected String email;
 	protected String senha;
-	private ArrayList<Reclamacao> reclamacao;
+	protected ArrayList<Reclamacao> reclamacao;
 	
 	public Usuario(String nome, String endereco, String email, String senha, ArrayList<Reclamacao> reclamacao) {
 		this.nome = nome;
@@ -16,7 +16,7 @@ public abstract class Usuario {
 		this.email = email;
 		this.senha = senha;
 		this.reclamacao = reclamacao;
-		this.reclamacao = new ArrayList<>(reclamacao);;
+		this.reclamacao = new ArrayList<>(reclamacao);
 	}
 	
 	public Usuario() {
@@ -72,4 +72,7 @@ public abstract class Usuario {
 	}
 	
 	public abstract String exibirDados();
+	
+	public abstract String filtrarReclamacoesResp();
+	public abstract String filtrarReclamacoesNResp();
 }
