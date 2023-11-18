@@ -9,7 +9,7 @@ import negocio.UsuarioConsumidor;
 import negocio.UsuarioEmpresa;
 
 public class Conta {
-	private static ArrayList<UsuarioEmpresa> empresasExistentes;
+	private ArrayList<UsuarioEmpresa> empresasExistentes;
 	private ArrayList<UsuarioConsumidor> consumidoresExistentes;
 	private ArrayList<Usuario> contasExistentes;
 	
@@ -94,28 +94,69 @@ public class Conta {
     }
 
     // Listagem de reclamações associadas a cada empresa
-    public void listarReclamacoesDaEmpresa(String nomeEmpresa) {
-        List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
 
-        for (UsuarioConsumidor consumidor : consumidoresExistentes) {
-            List<Reclamacao> reclamacoesDoConsumidor = consumidor.getReclamacoes();
-
-            for (Reclamacao reclamacao : reclamacoesDoConsumidor) {
-                if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
-                    reclamacoesDaEmpresa.add(reclamacao);
+        public void listarReclamacoesDaEmpresa(String nomeEmpresa) {
+            List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
+        
+            for (Usuario usuario : contasExistentes) {
+                List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+        
+                for (Reclamacao reclamacao : reclamacoes) {
+                    if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+                        reclamacoesDaEmpresa.add(reclamacao);
+                    }
                 }
             }
-        }
-        if (!reclamacoesDaEmpresa.isEmpty()) {
-            System.out.println("Reclamações da empresa " + nomeEmpresa + ":");
-            for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
-                System.out.println(reclamacao.toString());
+        
+            if (!reclamacoesDaEmpresa.isEmpty()) {
+                System.out.println("Reclamações da empresa " + nomeEmpresa + ":");
+                for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
+                    System.out.println(reclamacao.toString());
+                }
+            } else {
+                System.out.println("Nenhuma reclamação encontrada para a empresa " + nomeEmpresa);
             }
-        } else {
-            System.out.println("Nenhuma reclamação encontrada para a empresa " + nomeEmpresa);
         }
-    }
+        /* 
+        A listagem caso a "ArrayList<Usuario> contasExistentes" for excluida, pois ela só é usada na listagem das reclamações da empresa
 
+         public void listarReclamacoesDaEmpresa(String nomeEmpresa) {
+            List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
+
+            // Percorre consumidores
+            for (Usuario usuario : consumidoresExistentes) {
+                List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+
+                for (Reclamacao reclamacao : reclamacoes) {
+                    if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+                        reclamacoesDaEmpresa.add(reclamacao);
+                    }
+                }
+            }
+
+            // Percorre empresas
+            for (Usuario usuario : empresasExistentes) {
+                List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+
+                for (Reclamacao reclamacao : reclamacoes) {
+                    if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+                        reclamacoesDaEmpresa.add(reclamacao);
+                    }
+                }
+            }
+
+            if (!reclamacoesDaEmpresa.isEmpty()) {
+                System.out.println("Reclamações da empresa " + nomeEmpresa + ":");
+                for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
+                    System.out.println(reclamacao.toString());
+                }
+            } else {
+                System.out.println("Nenhuma reclamação encontrada para a empresa " + nomeEmpresa);
+            }
+        }
+         */
+        
+        
 	// Simulação do banco de dados
 	public void preencherDados() {
 		for(int i = 0; i < 10; i++) {
@@ -124,9 +165,11 @@ public class Conta {
 			UsuarioEmpresa empresa = new UsuarioEmpresa("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, new ArrayList<Reclamacao>(),"NomeComercial" + s, 
 					"CNPJ" + s,"Site" + s,"NomeResponsavel" + s,"EmailResponsavel" + s);		
 			empresasExistentes.add(empresa);
+            contasExistentes.add(empresa);
 			UsuarioConsumidor  consumidor = new UsuarioConsumidor("Nome" + s,"Endereco" + s,"Email" + s,"Senha" + s, new ArrayList<Reclamacao>(),"Cpf" + s, 
 					"DataNascimento" + s, g,"Celular" + s);
 			consumidoresExistentes.add(consumidor);
+            contasExistentes.add(consumidor);
 		}
 		
 	}

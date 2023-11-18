@@ -147,11 +147,11 @@ public class UsuarioEmpresa extends Usuario{
 			return filtro;
 		}
 	}
-	
+
 	public String responderReclamacao(String titulo, String resposta) {
 		for(int i = 0; i < reclamacao.size(); i++) {
 			if(reclamacao.get(i).getTitulo().equals(titulo) && reclamacao.get(i).getStatus().equals("Pendente")) {
-				reclamacao.get(i).setStatus("Repondida");;
+				reclamacao.get(i).setStatus("Repondida");
 				return "RESPOSTA: " + resposta + "\n Reclamacao respondida com sucesso!";
 			}
 		}
