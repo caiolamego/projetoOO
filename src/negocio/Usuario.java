@@ -15,7 +15,6 @@ public abstract class Usuario {
 		this.endereco = endereco;
 		this.email = email;
 		this.senha = senha;
-		this.reclamacao = reclamacao;
 		this.reclamacao = new ArrayList<>(reclamacao);
 	}
 	

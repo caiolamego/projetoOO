@@ -14,8 +14,8 @@ public class Program {
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		//teste 
-		Reclamacao reclamacao = new Reclamacao("Nome9", "TITULO", null, null, null, null, "Pendente", 0);
+		// teste
+		Reclamacao reclamacao = new Reclamacao("Nome9", "TITULO", null, null, null, null, "Pendente", 0, null);
 		conta.preencherDados();
 		int op = -1;
 		int op2 = -1;
@@ -64,7 +64,7 @@ public class Program {
 				} else {
 					while (op2 != 0) {
 						System.out.println(imprimirOpcoesEmpresa());
-						//teste 
+						// teste
 						empresa.getReclamacao().add(reclamacao);
 						op2 = sc.nextInt();
 						switch (op2) {
@@ -77,16 +77,16 @@ public class Program {
 								System.out.println("O sistema sera encerrado!");
 								break;
 							}
-							
+
 						case 1:
 							System.out.println("Digite o numero corrspondente a sua escolha para filtragem: \n"
-									+ "1 - Respondidas \n"
-									+ "2 - Pendentes");
+									+ "1 - Respondidas \n" + "2 - Pendentes");
 							int filtro = sc.nextInt();
-							if(filtro == 1) {
-								empresa.filtrarReclamacoesResp();
+							if (filtro == 1) {
+								System.out.println(empresa.filtrarReclamacoesResp());
 							} else if (filtro == 2) {
-								empresa.filtrarReclamacoesNResp();
+								System.out.println(empresa.filtrarReclamacoesNResp());
+								sc.next();
 							} else {
 								System.out.println("Opcao invalida!");
 							}
@@ -98,12 +98,12 @@ public class Program {
 								op2 = 0;
 								System.out.println("O sistema sera encerrado!");
 							}
-							
+
 						case 2:
 							conta.listarReclamacoesDaEmpresa(empresa.getNome());
 							sc.next();
 							break;
-							
+
 						case 3:
 							System.out.println("Escreva o titulo da Reclamacao:");
 							String titulo = sc.next();
@@ -111,7 +111,7 @@ public class Program {
 							System.out.println("Escreva a resposta para a Reclamacao:");
 							String resposta = sc.next();
 							System.out.println();
-							empresa.responderReclamacao(titulo, resposta);
+							System.out.println(empresa.responderReclamacao(titulo, resposta));
 							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
 							if (sc.next().charAt(0) == 'y') {
 								break;
@@ -120,6 +120,33 @@ public class Program {
 								op2 = 0;
 								System.out.println("O sistema sera encerrado!");
 							}
+						case 4:
+							// colocar o metodo de listar as reclamacoes
+							System.out.println(mostrarReclamacao(empresa));
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+
+						case 5:
+							boolean edicao = mudarDadoEmpresa(empresa);
+							System.out.println(empresa.editarDados(edicao)); 
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+							}
+
 						}
 					}
 					break;
@@ -191,8 +218,8 @@ public class Program {
 		emailResponsavel = sc.nextLine();
 		System.out.println("Crie uma senha de 8 digitos:");
 		senha = sc.nextLine();
-		UsuarioEmpresa empresa = new UsuarioEmpresa(nome, endereco, email, senha, new ArrayList<Reclamacao>(), nomeComercial, cnpj, site,
-				nomeResponsavel, emailResponsavel);
+		UsuarioEmpresa empresa = new UsuarioEmpresa(nome, endereco, email, senha, new ArrayList<Reclamacao>(),
+				nomeComercial, cnpj, site, nomeResponsavel, emailResponsavel);
 		return empresa;
 	}
 
@@ -299,8 +326,77 @@ public class Program {
 		opcoesEmpresa = opcoesEmpresa + "1 - Filtrar Reclamacao \n";
 		opcoesEmpresa = opcoesEmpresa + "2 - Listar Reclamacoes \n";
 		opcoesEmpresa = opcoesEmpresa + "3 - Responder Reclamacao \n";
-		opcoesEmpresa = opcoesEmpresa + "4 - Ver Reclamacao";
+		opcoesEmpresa = opcoesEmpresa + "4 - Ver Reclamacao\n";
+		opcoesEmpresa = opcoesEmpresa + "5 - Editar dados";
 		return opcoesEmpresa;
+	}
+
+	private static String mostrarReclamacao(UsuarioEmpresa empresa) {
+		System.out.println("Escreva o titulo da reclamacao que deseja ver: ");
+		String titulo = sc.next();
+		for (int i = 0; i < empresa.getReclamacao().size(); i++) {
+			if (empresa.getReclamacao().get(i).getTitulo().equals(titulo)) {
+				return empresa.getReclamacao().get(i).exibirReclamacao();
+			}
+		}
+		return "Reclamacao nao encontrada!";
+	}
+
+	private static boolean mudarDadoEmpresa(UsuarioEmpresa empresa) {
+		System.out.println(empresa.exibirDados());
+		System.out.println("Digite o valor correspondente ao dado que deseja mudar:" + "\n0 - Nao desejo mais editar!"
+				+ "\n1 - Nome Fantasia" + "\n2 - Site" + "\n3 - Nome do responsavel" + "\n4 - Email do Responsavel"
+				+ "\n5 - Email" + "\n6 - Endereco" + "\n7 - Senha");
+		int option = -1;
+		option = sc.nextInt();
+		boolean result = false;
+		switch (option) {
+		case 0:
+			break;
+		case 1:
+			System.out.println("Digite o novo nome:");
+			String novoNome = sc.next();
+			empresa.setNome(novoNome);
+			result = true;
+			break;
+		case 2:
+			System.out.println("Digite o novo site:");
+			String novoSite = sc.next();
+			empresa.setSite(novoSite);
+			result = true;
+			break;
+		case 3:
+			System.out.println("Digite o novo nome responsavel:");
+			String novoResponsavel = sc.next();
+			empresa.setNomeResponsavel(novoResponsavel);
+			result = true;
+			break;
+		case 4:
+			System.out.println("Digite o novo email responsavel");
+			String emailResponsavel = sc.next();
+			empresa.setEmailResponsavel(emailResponsavel);
+			result = true;
+			break;
+		case 5:
+			System.out.println("Digite o novo email:");
+			String novoEmail = sc.next();
+			empresa.setEmail(novoEmail);
+			result = true;
+			break;
+		case 6:
+			System.out.println("Digite o novo endereco:");
+			String novoEndereco = sc.next();
+			empresa.setEndereco(novoEndereco);
+			result = true;
+			break;
+		case 7:
+			System.out.println("Digite a nova senha:");
+			String novaSenha = sc.next();
+			empresa.setSenha(novaSenha);
+			result = true;
+			break;
+		}
+		return result;
 	}
 
 }

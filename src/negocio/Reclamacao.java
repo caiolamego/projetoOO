@@ -11,10 +11,11 @@ public class Reclamacao {
 	private String produtoOuServico;
 	private String status = "Pendente";
 	private double nota;
+	private String resposta;
 
 	
 	public Reclamacao(String nomeEmpresa, String titulo, String descricao, String celular, String classificacao,
-			String produtoOuServico, String status, double nota) {
+			String produtoOuServico, String status, double nota, String resposta) {
 		this.nomeEmpresa = nomeEmpresa;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -23,6 +24,7 @@ public class Reclamacao {
 		this.produtoOuServico = produtoOuServico;
 		this.status = status;
 		this.nota = nota;
+		this.resposta = resposta;
 	}
 
 	public String getNomeEmpresa() {
@@ -91,6 +93,33 @@ public class Reclamacao {
 		this.nota = nota;
 	}
 	
+	
+	public String getResposta() {
+		return resposta;
+	}
+
+	public void setResposta(String resposta) {
+		this.resposta = resposta;
+	}
+
+	public String exibirReclamacao() {
+		if(status == "Pendente") {
+			return "TITULO: " + titulo
+					+ "\nEMPRESA: " + nomeEmpresa
+					+ "\nDESCRICAO: " + descricao
+					+ "\nPRODUTO OU SERVICO: " + produtoOuServico
+					+ "\nNOTA: " + nota
+					+ "\nSTATUS: " + status;
+		} else {
+			return "TITULO: " + titulo
+					+ "\nEMPRESA: " + nomeEmpresa
+					+ "\nDESCRICAO: " + descricao
+					+ "PRODUTO OU SERVICO: " + produtoOuServico
+					+ "\nNOTA: " + nota
+					+ "\nSTATUS: " + status
+					+ "\nRESPOSTA: " + resposta;
+		}
+	}
 	
 	
 	

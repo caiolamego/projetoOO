@@ -84,6 +84,22 @@ public class UsuarioConsumidor extends Usuario{
 				+ ", Senha = " + senha + ", CPF = " + cpf + ", DataNascimento = " + dataNascimento + ", Genero = " + genero
 				+ ", Celular = " + celular + "]";
 	}
+
+
+
+	@Override
+	public String filtrarReclamacoesResp() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String filtrarReclamacoesNResp() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

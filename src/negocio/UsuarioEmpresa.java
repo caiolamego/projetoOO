@@ -98,10 +98,23 @@ public class UsuarioEmpresa extends Usuario{
 
 	@Override
 	public String exibirDados() {
-		// TODO Auto-generated method stub
-		return null;
+		return "NOME FANTASIA: " + nome
+				+ "\nNOME COMERCIAL: " + nomeComercial
+				+ "\nCNPJ: " + cnpj
+				+ "\nENDERECO: " + endereco
+				+ "\nEMAIL: " + email
+				+ "\nSITE: " + senha
+				+ "\nNOME RESPONSAVEL: " + nomeResponsavel
+				+ "\nEMAIL RESPONSAVEL: " + emailResponsavel;
 	}
-
+	
+	public String editarDados(boolean option) {
+		if(option == true) {
+			return "Usuario atualizado com sucesso!";
+		} else {
+			return "Usuario nao atualizado!";
+		}
+	}
 
 
 
@@ -151,11 +164,12 @@ public class UsuarioEmpresa extends Usuario{
 	public String responderReclamacao(String titulo, String resposta) {
 		for(int i = 0; i < reclamacao.size(); i++) {
 			if(reclamacao.get(i).getTitulo().equals(titulo) && reclamacao.get(i).getStatus().equals("Pendente")) {
-				reclamacao.get(i).setStatus("Repondida");;
-				return "RESPOSTA: " + resposta + "\n Reclamacao respondida com sucesso!";
+				reclamacao.get(i).setStatus("Repondida");
+				reclamacao.get(i).setResposta(resposta);
+				return "RESPOSTA: " + resposta + "\nReclamacao respondida com sucesso!";
 			}
 		}
-		return "Reclamacao nao encontrada";
+		return "Reclamacao nao encontrada ou ja respondida";
 	}
 	
 	
