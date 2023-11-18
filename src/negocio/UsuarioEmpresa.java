@@ -160,7 +160,7 @@ public class UsuarioEmpresa extends Usuario{
 			return filtro;
 		}
 	}
-	
+
 	public String responderReclamacao(String titulo, String resposta) {
 		for(int i = 0; i < reclamacao.size(); i++) {
 			if(reclamacao.get(i).getTitulo().equals(titulo) && reclamacao.get(i).getStatus().equals("Pendente")) {

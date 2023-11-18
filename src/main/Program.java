@@ -1,10 +1,12 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import dados.Conta;
 import negocio.Reclamacao;
+import negocio.Usuario;
 import negocio.UsuarioConsumidor;
 import negocio.UsuarioEmpresa;
 
@@ -62,10 +64,10 @@ public class Program {
 						break;
 					}
 				} else {
+					// teste
+					empresa.getReclamacao().add(reclamacao);
 					while (op2 != 0) {
 						System.out.println(imprimirOpcoesEmpresa());
-						// teste
-						empresa.getReclamacao().add(reclamacao);
 						op2 = sc.nextInt();
 						switch (op2) {
 						case 0:
@@ -86,7 +88,6 @@ public class Program {
 								System.out.println(empresa.filtrarReclamacoesResp());
 							} else if (filtro == 2) {
 								System.out.println(empresa.filtrarReclamacoesNResp());
-								sc.next();
 							} else {
 								System.out.println("Opcao invalida!");
 							}
@@ -97,11 +98,19 @@ public class Program {
 								op = 0;
 								op2 = 0;
 								System.out.println("O sistema sera encerrado!");
+								break;
 							}
 
 						case 2:
-							conta.listarReclamacoesDaEmpresa(empresa.getNome());
-							sc.next();
+							System.out.println(conta.listarReclamacoesDaEmpresa(empresa.getNome()));
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+							}
 							break;
 
 						case 3:
@@ -119,9 +128,10 @@ public class Program {
 								op = 0;
 								op2 = 0;
 								System.out.println("O sistema sera encerrado!");
+								break;
 							}
 						case 4:
-							// colocar o metodo de listar as reclamacoes
+							System.out.println(conta.listarReclamacoesDaEmpresa(empresa.getNome()));
 							System.out.println(mostrarReclamacao(empresa));
 							System.out.println();
 							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
@@ -136,7 +146,7 @@ public class Program {
 
 						case 5:
 							boolean edicao = mudarDadoEmpresa(empresa);
-							System.out.println(empresa.editarDados(edicao)); 
+							System.out.println(empresa.editarDados(edicao));
 							System.out.println();
 							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
 							if (sc.next().charAt(0) == 'y') {
@@ -145,8 +155,18 @@ public class Program {
 								op = 0;
 								op2 = 0;
 								System.out.println("O sistema sera encerrado!");
+								break;
 							}
-
+						default:
+							System.out.println("Opcao invalida!");
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+							}
 						}
 					}
 					break;
