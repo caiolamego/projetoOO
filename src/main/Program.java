@@ -1,10 +1,12 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import dados.Conta;
 import negocio.Reclamacao;
+import negocio.Usuario;
 import negocio.UsuarioConsumidor;
 import negocio.UsuarioEmpresa;
 
@@ -100,7 +102,7 @@ public class Program {
 							}
 							
 						case 2:
-							conta.listarReclamacoesDaEmpresa(empresa.getNome());
+							listarReclamacoesDaEmpresa(empresa.getNome());
 							sc.next();
 							break;
 							
@@ -303,4 +305,85 @@ public class Program {
 		return opcoesEmpresa;
 	}
 
+	// Listagem de reclamações do usuário
+    public void listarReclamacoesDoUsuario(String nomeUsuario) {
+        Usuario usuario = conta.pesquisarUsuario(nomeUsuario);
+
+        if (usuario != null) {
+            List<Reclamacao> reclamacoesDoUsuario = usuario.getReclamacoes();
+
+            if (reclamacoesDoUsuario.isEmpty()) {
+                System.out.println("Este usuário não possui reclamações.");
+            } else {
+                System.out.println("Reclamações do usuário " + nomeUsuario + ":");
+                for (Reclamacao reclamacao : reclamacoesDoUsuario) {
+                    System.out.println(reclamacao.toString());
+                }
+            }
+        } else {
+            System.out.println("Usuário não encontrado.");
+        }
+    }
+	
+    // Listagem de reclamações associadas a cada empresa
+	public static void listarReclamacoesDaEmpresa(String nomeEmpresa) {
+		List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
+	
+		for (Usuario usuario : conta.getContasExistentes()) {
+			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+	
+			for (Reclamacao reclamacao : reclamacoes) {
+				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+					reclamacoesDaEmpresa.add(reclamacao);
+				}
+			}
+		}
+	
+		if (!reclamacoesDaEmpresa.isEmpty()) {
+			System.out.println("Reclamações da empresa " + nomeEmpresa + ":");
+			for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
+				System.out.println(reclamacao.toString());
+			}
+		} else {
+			System.out.println("Nenhuma reclamação encontrada para a empresa " + nomeEmpresa);
+		}
+	}
+	/* 
+	A listagem caso a "ArrayList<Usuario> contasExistentes" for excluida, pois ela só é usada na listagem das reclamações da empresa
+
+	 public void listarReclamacoesDaEmpresa(String nomeEmpresa) {
+		List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
+
+		// Percorre consumidores
+		for (Usuario usuario : consumidoresExistentes) {
+			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+
+			for (Reclamacao reclamacao : reclamacoes) {
+				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+					reclamacoesDaEmpresa.add(reclamacao);
+				}
+			}
+		}
+
+		// Percorre empresas
+		for (Usuario usuario : empresasExistentes) {
+			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+
+			for (Reclamacao reclamacao : reclamacoes) {
+				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+					reclamacoesDaEmpresa.add(reclamacao);
+				}
+			}
+		}
+
+		if (!reclamacoesDaEmpresa.isEmpty()) {
+			System.out.println("Reclamações da empresa " + nomeEmpresa + ":");
+			for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
+				System.out.println(reclamacao.toString());
+			}
+		} else {
+			System.out.println("Nenhuma reclamação encontrada para a empresa " + nomeEmpresa);
+		}
+	}
+	 */
 }
