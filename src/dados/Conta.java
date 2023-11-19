@@ -57,6 +57,17 @@ public class Conta {
 		this.contasExistentes = contasExistentes;
 	}
 
+    // Excluir Conta
+    public boolean excluirConta(Usuario usuario){
+        boolean remocaogeral = contasExistentes.remove(usuario);
+        boolean remocaousuario = consumidoresExistentes.remove(usuario);
+        if ( remocaogeral && remocaousuario) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 	// Pesquisa de usuário
     public Usuario pesquisarUsuario(String nome) {
         for (UsuarioConsumidor consumidor : consumidoresExistentes) {
@@ -71,25 +82,39 @@ public class Conta {
             }
         }
         return null;
+    }   
+    // Pesquisar por qualquer reclamação
+    public Reclamacao pesquisaReclamacao(String titulo){
+        for (Usuario usuario : contasExistentes) {
+			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+	
+			for (Reclamacao reclamacao : reclamacoes) {
+				if (reclamacao.getTitulo().equalsIgnoreCase(titulo)) { 
+					return reclamacao;
+				}
+			}
+		}
+        return null;
     }
-    
     // Listagem de reclamações do usuário
-    public void listarReclamacoesDoUsuario(String nomeUsuario) {
+    public String listarReclamacoesDoUsuario(String nomeUsuario) {
         Usuario usuario = pesquisarUsuario(nomeUsuario);
 
         if (usuario != null) {
             List<Reclamacao> reclamacoesDoUsuario = usuario.getReclamacoes();
 
             if (reclamacoesDoUsuario.isEmpty()) {
-                System.out.println("Este usuário não possui reclamações.");
+                return "Este usuário não possui reclamações";
             } else {
-                System.out.println("Reclamações do usuário " + nomeUsuario + ":");
+                String recConsumidor = "Reclamacoes da empresa " + nomeUsuario + ":\n";
+			    String textoRec = "";
                 for (Reclamacao reclamacao : reclamacoesDoUsuario) {
-                    System.out.println(reclamacao.toString());
+                    textoRec = textoRec + reclamacao.getTitulo() + "\n";
                 }
+                return recConsumidor + textoRec + "\n";
             }
         } else {
-            System.out.println("Usuário não encontrado.");
+            return "Usuário: "+ nomeUsuario + "não encontrado " ;
         }
     }
 	
@@ -101,7 +126,7 @@ public class Conta {
 			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
 	
 			for (Reclamacao reclamacao : reclamacoes) {
-				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) {
+				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) { 
 					reclamacoesDaEmpresa.add(reclamacao);
 				}
 			}
@@ -112,7 +137,7 @@ public class Conta {
 			String textoRec = "";
 			for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
 				textoRec = textoRec + reclamacao.getTitulo() + "\n";
-				System.out.println(reclamacoesDaEmpresa.size());
+				System.out.println(reclamacoesDaEmpresa.size()); // 
 			}
 			return recEmpresa + textoRec + "\n";
 		} else {

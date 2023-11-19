@@ -103,7 +103,7 @@ public class UsuarioEmpresa extends Usuario{
 				+ "\nCNPJ: " + cnpj
 				+ "\nENDERECO: " + endereco
 				+ "\nEMAIL: " + email
-				+ "\nSITE: " + senha
+				+ "\nSITE: " + senha 
 				+ "\nNOME RESPONSAVEL: " + nomeResponsavel
 				+ "\nEMAIL RESPONSAVEL: " + emailResponsavel;
 	}

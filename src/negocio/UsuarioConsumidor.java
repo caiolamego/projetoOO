@@ -72,8 +72,22 @@ public class UsuarioConsumidor extends Usuario{
 
 	@Override
 	public String exibirDados() {
-		// TODO Auto-generated method stub
-		return null;
+		return "NOME: " + nome
+				+ "\nENDECO: " + endereco
+				+ "\nCPF: " + cpf
+				+ "\nDATA DE NASCIMENTO: " + dataNascimento
+				+ "\nGENERO: " + genero
+				+ "\nCELULAR: " + celular
+				+ "\nENDEREÇO: " + endereco
+				+ "\nEMAIL: " + email;
+	}
+	
+	public String editarDados(boolean option) {
+		if(option == true) {
+			return "Usuario atualizado com sucesso!";
+		} else {
+			return "Usuario nao atualizado!";
+		}
 	}
 
 
@@ -85,7 +99,10 @@ public class UsuarioConsumidor extends Usuario{
 				+ ", Celular = " + celular + "]";
 	}
 
-
+	@Override
+    public String getSenha() {
+        return senha;
+    }
 
 	@Override
 	public String filtrarReclamacoesResp() {
