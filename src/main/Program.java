@@ -16,8 +16,6 @@ public class Program {
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		// teste
-		Reclamacao reclamacao = new Reclamacao("Nome9", "TITULO", null, null, null, null, "Pendente", 0, null);
 		conta.preencherDados();
 		int op = -1;
 		int op2 = -1;
@@ -64,8 +62,6 @@ public class Program {
 						break;
 					}
 				} else {
-					// teste
-					empresa.getReclamacao().add(reclamacao);
 					while (op2 != 0) {
 						System.out.println(imprimirOpcoesEmpresa());
 						op2 = sc.nextInt();
@@ -115,11 +111,10 @@ public class Program {
 
 						case 3:
 							System.out.println("Escreva o titulo da Reclamacao:");
-							String titulo = sc.next();
-							System.out.println();
+							sc.nextLine();
+							String titulo = sc.nextLine();
 							System.out.println("Escreva a resposta para a Reclamacao:");
-							String resposta = sc.next();
-							System.out.println();
+							String resposta = sc.nextLine();
 							System.out.println(empresa.responderReclamacao(titulo, resposta));
 							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
 							if (sc.next().charAt(0) == 'y') {
@@ -182,118 +177,151 @@ public class Program {
 						opConsumidor = sc.nextInt();
 
 						switch (opConsumidor) {
-							case 0:
-								System.out.println("Obrigado, " + consumidor.getNome() + "! Deseja voltar ao menu incial?");
-								if (sc.next().charAt(0) == 'y') {
-									break;
+						case 0:
+							System.out.println("Obrigado, " + consumidor.getNome() + "! Deseja voltar ao menu incial?");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 1:
+							System.out.println(consumidor.exibirDados());
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 2:
+							boolean edicao = mudarDadoConsumidor(consumidor);
+							System.out.println();
+							System.out.println(consumidor.editarDados(edicao));
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 3:
+							String resultado = conta.listarReclamacoesDoUsuario(consumidor.getNome());
+							System.out.println(resultado);
+							// Se o usúario tiver reclamações ele pode mostrar postar por completo uma delas
+							if (resultado != "Este usuario nao possui reclamacoes"
+									&& resultado != "Usuario: " + consumidor.getNome() + "não encontrado ") {
+								System.out.println(mostrarReclamacaoComsumidor(consumidor));
+							}
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 4:
+							boolean novaReclamacao = criarReclamação(consumidor);
+							if (novaReclamacao == true) {
+								System.out.println("Reclamacao criada com sucesso!");
+							} else {
+								System.out.println("Falha ao criar a reclamacao!");
+							}
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 5:
+							System.out.println("Digite o titulo da reclamacao:");
+							sc.nextLine();
+							String titulo = sc.nextLine();
+							Reclamacao reclamacaop = conta.pesquisaReclamacao(titulo);
+							if (reclamacaop != null) {
+								System.out.println(reclamacaop.exibirReclamacao());
+							} else {
+								System.out.println("Reclamação não encontrada!");
+							}
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						case 6:
+							System.out.println("Digite o numero correspondente a sua escolha para filtragem: \n"
+									+ "1 - Respondidas \n" + "2 - Pendentes");
+							int filtro = sc.nextInt();
+							if (filtro == 1) {
+								System.out.println(consumidor.filtrarReclamacoesResp());
+							} else if (filtro == 2) {
+								System.out.println(consumidor.filtrarReclamacoesNResp());
+							} else {
+								System.out.println("Opcao invalida!");
+							}
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								op2 = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+
+						case 7:
+							System.out.println("Digite sua senha");
+							String senha = sc.next();
+							if (senha.equals(consumidor.getSenha())) {
+								boolean excluir = conta.excluirConta(consumidor);
+								if (excluir) {
+									System.out.println("Elemento removido com sucesso.\n");
 								} else {
-									op = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
+									System.out.println("Elemento não encontrado na lista.\n");
 								}
-							case 1:
-								System.out.println(consumidor.toString());
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}
-							case 2:
-								boolean edicao = mudarDadoConsumidor(consumidor);
-								System.out.println(consumidor.editarDados(edicao));
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}
-							case 3:
-								String resultado = conta.listarReclamacoesDoUsuario(consumidor.getNome());
-								System.out.println(resultado);
-								// Se o usúario tiver reclamações ele pode mostrar postar por completo uma delas
-								if (resultado != "Este usuário não possui reclamações" && resultado != "Usuário: "+ consumidor.getNome() + "não encontrado ") {
-									System.out.println(mostrarReclamacaoComsumidor(consumidor));
-								}
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}							
-							case 4:
-								boolean criar = criarReclamação(consumidor);
-								if(criar == true){
-									System.out.println("Reclamação criada com sucesso:");
-								}else{
-									System.out.println("Falha ao criar a reclamação.");
-								}
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}
-							case 5:
-								System.out.println("Digite o título da reclamação:");
-								String titulo = sc.next();
-								Reclamacao reclamacaop = conta.pesquisaReclamacao(titulo);
-								if(reclamacaop != null){
-									System.out.println(reclamacaop.toString());
-								}else{
-									System.out.println("Reclamação não encontrada");
-								}
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}
-							case 6:
-								System.out.println("Digite sua senha");
-								String senha = sc.next();
-								if (senha.equals(consumidor.getSenha())) {
-									boolean excluir = conta.excluirConta(consumidor);
-									if (excluir) {
-										System.out.println("Elemento removido com sucesso.\n");
-									}else {
-										System.out.println("Elemento não encontrado na lista.\n");
-									}
-								}else{
-									System.out.println("Senha incorreta\n");
-								}
-								System.out.println();
-								System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
-								if (sc.next().charAt(0) == 'y') {
-									break;
-								} else {
-									op = 0;
-									opConsumidor = 0;
-									System.out.println("O sistema sera encerrado!");
-									break;
-								}
-							default:
-								System.out.println("Opção inválida no Menu do Consumidor.");
+							} else {
+								System.out.println("Senha incorreta\n");
+							}
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+						default:
+							System.out.println("Opcao invalida no Menu do Consumidor.");
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
 						}
 					}
 				} else {
@@ -303,11 +331,14 @@ public class Program {
 						break;
 					} else {
 						op = 0;
-						System.out.println("O sistema será encerrado!");
+						System.out.println("O sistema sera encerrado!");
 						break;
 					}
 				}
 				break;
+
+			default:
+				System.out.println("Opcao Invalida!");
 
 			}
 
@@ -319,6 +350,7 @@ public class Program {
 
 		sc.close();
 	}
+
 // Menu inicial
 	public static String imprimirMenuLogin() {
 		String opcoesIniciais = new String("Digite o valor correspondente para a opcao que deseja realizar: \n");
@@ -329,6 +361,7 @@ public class Program {
 		opcoesIniciais = opcoesIniciais + "4 - Login consumidor";
 		return opcoesIniciais;
 	}
+
 // Leitura de dados
 	public static UsuarioEmpresa lerDadosEmpresa() {
 		String nome;
@@ -391,10 +424,11 @@ public class Program {
 		celular = sc.nextLine();
 		System.out.println("Crie uma senha de 8 digitos:");
 		senha = sc.nextLine();
-		UsuarioConsumidor consumidor = new UsuarioConsumidor(nome, endereco, email, senha, null, cpf, dataNascimento,
-				genero, celular);
+		UsuarioConsumidor consumidor = new UsuarioConsumidor(nome, endereco, email, senha, new ArrayList<Reclamacao>(),
+				cpf, dataNascimento, genero, celular);
 		return consumidor;
 	}
+
 // Cadastro
 	public static boolean cadastrarEmpresa() {
 		UsuarioEmpresa empresa = lerDadosEmpresa();
@@ -416,7 +450,7 @@ public class Program {
 		if ((consumidor.getSenha().length() < 4) || (consumidor.getSenha().length() > 8)) {
 			System.out.println("O consumidor nao pode ser cadastrado, pois a senha nao segue o padrao solicitado!");
 			return false;
-		} else if (consumidor.getCpf().length() != 8) {
+		} else if (consumidor.getCpf().length() != 11) {
 			System.out.println("A empresa nao pode ser cadastrada, pois o CPF nao possui 8 digitos");
 			return false;
 		} else {
@@ -425,6 +459,7 @@ public class Program {
 			return true;
 		}
 	}
+
 // login
 	public static UsuarioEmpresa loginEmpresa() {
 		Scanner sc = new Scanner(System.in);
@@ -460,6 +495,7 @@ public class Program {
 		}
 		return null;
 	}
+
 // Menu de cada usuario
 	public static String imprimirOpcoesEmpresa() {
 		String opcoesEmpresa = new String("Digite o valor correspondente para a opcao que deseja realizar: \n");
@@ -468,25 +504,28 @@ public class Program {
 		opcoesEmpresa = opcoesEmpresa + "2 - Listar Reclamacoes \n";
 		opcoesEmpresa = opcoesEmpresa + "3 - Responder Reclamacao \n";
 		opcoesEmpresa = opcoesEmpresa + "4 - Ver Reclamacao\n";
-		opcoesEmpresa = opcoesEmpresa + "5 - Editar dados";
+		opcoesEmpresa = opcoesEmpresa + "5 - Ver e Editar dados";
 		return opcoesEmpresa;
 	}
 
-	public static String imprimirOpcoesConsumidor(){
+	public static String imprimirOpcoesConsumidor() {
 		String opcoesConsumidor = new String("Digite o valor correspondente para a opcao que deseja realizar: \n");
 		opcoesConsumidor = opcoesConsumidor + "0 - Sair da conta \n";
 		opcoesConsumidor = opcoesConsumidor + "1 - Exibir Dados \n";
-		opcoesConsumidor = opcoesConsumidor + "2 - Editar dados \n" ;
+		opcoesConsumidor = opcoesConsumidor + "2 - Editar dados \n";
 		opcoesConsumidor = opcoesConsumidor + "3 - Listar Suas Reclamacoes \n";
 		opcoesConsumidor = opcoesConsumidor + "4 - Criar Reclamacao \n";
-		opcoesConsumidor = opcoesConsumidor + "5 - Pesquisar Reclamacao\n";
-		opcoesConsumidor = opcoesConsumidor + "6 - excluir conta";
+		opcoesConsumidor = opcoesConsumidor + "5 - Pesquisar Qualquer Reclamacao\n";
+		opcoesConsumidor = opcoesConsumidor + "6 - Filtrar Reclamacao\n";
+		opcoesConsumidor = opcoesConsumidor + "7 - excluir conta";
 		return opcoesConsumidor;
 	}
+
 // listagem
 	private static String mostrarReclamacao(UsuarioEmpresa empresa) {
 		System.out.println("Escreva o titulo da reclamacao que deseja ver: ");
-		String titulo = sc.next();
+		sc.nextLine();
+		String titulo = sc.nextLine();
 		for (int i = 0; i < empresa.getReclamacao().size(); i++) {
 			if (empresa.getReclamacao().get(i).getTitulo().equals(titulo)) {
 				return empresa.getReclamacao().get(i).exibirReclamacao();
@@ -497,7 +536,9 @@ public class Program {
 
 	private static String mostrarReclamacaoComsumidor(UsuarioConsumidor consumidor) {
 		System.out.println("Escreva o titulo da reclamacao que deseja ver: ");
-		String titulo = sc.next();
+		sc.nextLine();
+		String titulo = sc.nextLine();
+		
 		for (int i = 0; i < consumidor.getReclamacao().size(); i++) {
 			if (consumidor.getReclamacao().get(i).getTitulo().equals(titulo)) {//
 				return consumidor.getReclamacao().get(i).exibirReclamacao();
@@ -505,6 +546,7 @@ public class Program {
 		}
 		return "Reclamacao nao encontrada!";
 	}
+
 // mudar dados
 	private static boolean mudarDadoEmpresa(UsuarioEmpresa empresa) {
 		System.out.println(empresa.exibirDados());
@@ -519,54 +561,68 @@ public class Program {
 			break;
 		case 1:
 			System.out.println("Digite o novo nome:");
-			String novoNome = sc.next();
+			sc.nextLine();
+			String novoNome = sc.nextLine();
 			empresa.setNome(novoNome);
 			result = true;
 			break;
 		case 2:
 			System.out.println("Digite o novo site:");
-			String novoSite = sc.next();
+			sc.nextLine();
+			String novoSite = sc.nextLine();
 			empresa.setSite(novoSite);
 			result = true;
 			break;
 		case 3:
 			System.out.println("Digite o novo nome responsavel:");
-			String novoResponsavel = sc.next();
+			sc.nextLine();
+			String novoResponsavel = sc.nextLine();
 			empresa.setNomeResponsavel(novoResponsavel);
 			result = true;
 			break;
 		case 4:
 			System.out.println("Digite o novo email responsavel");
-			String emailResponsavel = sc.next();
+			sc.nextLine();
+			String emailResponsavel = sc.nextLine();
 			empresa.setEmailResponsavel(emailResponsavel);
 			result = true;
 			break;
 		case 5:
 			System.out.println("Digite o novo email:");
-			String novoEmail = sc.next();
+			sc.nextLine();
+			String novoEmail = sc.nextLine();
 			empresa.setEmail(novoEmail);
 			result = true;
 			break;
 		case 6:
 			System.out.println("Digite o novo endereco:");
-			String novoEndereco = sc.next();
+			sc.nextLine();
+			String novoEndereco = sc.nextLine();
 			empresa.setEndereco(novoEndereco);
 			result = true;
 			break;
 		case 7:
 			System.out.println("Digite a nova senha:");
-			String novaSenha = sc.next();
-			empresa.setSenha(novaSenha);
-			result = true;
+			sc.nextLine();
+			String novaSenha = sc.nextLine();
+			if (novaSenha.length() < 4 || novaSenha.length() > 8) {
+				empresa.setSenha(novaSenha);
+				result = true;
+			} else {
+				result = false;
+			}
 			break;
+		default: 
+			System.out.println("Opcao Invalida!");
 		}
 		return result;
 	}
 
 	private static boolean mudarDadoConsumidor(UsuarioConsumidor consumidor) {
 		System.out.println(consumidor.exibirDados());
-		System.out.println("Digite o valor correspondente ao dado que deseja mudar:" 	+ "\n0 - Nao desejo mais editar!"	+ "\n1 - Nome" 	+ "\n2 - CPF" 
-				+ "\n3 - Data de Nascimento" 	+ "\n4 - Gênero"	+ "\n5 - Email" 	+ "\n6 - Endereco" 	+ "\n7 - Senha"	+ "\n8 - Celular");
+		System.out.println("Digite o valor correspondente ao dado que deseja mudar:" + "\n0 - Nao desejo mais editar!"
+				+ "\n1 - Nome" + "\n2 - CPF" + "\n3 - Data de Nascimento" + "\n4 - Gênero" + "\n5 - Email"
+				+ "\n6 - Endereco" + "\n7 - Senha" + "\n8 - Celular");
 		int option = -1;
 		option = sc.nextInt();
 		boolean result = false;
@@ -575,86 +631,117 @@ public class Program {
 			break;
 		case 1:
 			System.out.println("Digite o novo nome:");
-			String novoNome = sc.next();
+			sc.nextLine();
+			String novoNome = sc.nextLine();
 			consumidor.setNome(novoNome);
 			result = true;
 			break;
 		case 2:
 			System.out.println("Digite o novo CPF:");
-			String novoCPF = sc.next();
-			consumidor.setCpf(novoCPF);
-			result = true;
+			sc.nextLine();
+			String novoCpf = sc.nextLine();
+			if (novoCpf.length() != 11) {
+				result = false;
+			} else {
+				consumidor.setCpf(novoCpf);
+				result = true;
+			}
 			break;
 		case 3:
 			System.out.println("Digite a nova data de nascimento:");
-			String novaData = sc.next();
+			sc.nextLine();
+			String novaData = sc.nextLine();
 			consumidor.setDataNascimento(novaData);
 			result = true;
 			break;
 		case 4:
-			System.out.println("Digite F para Feminino ou M para Masculine");
-			String genero = sc.next();
+			System.out.println("Digite 'f' para Feminino,'m' para Masculino ou 'o' para outro:");
+			sc.nextLine();
+			String genero = sc.nextLine();
 			char caractere = genero.charAt(0);
-			consumidor.setGenero(caractere);
-			result = true;
+			if (caractere != 'm' && caractere != 'f' && caractere != 'o') {
+				consumidor.setGenero(caractere);
+				result = true;
+			} else {
+				result = false;
+			}
 			break;
 		case 5:
 			System.out.println("Digite o novo email:");
-			String novoEmail = sc.next();
+			sc.nextLine();
+			String novoEmail = sc.nextLine();
 			consumidor.setEmail(novoEmail);
 			result = true;
 			break;
 		case 6:
 			System.out.println("Digite o novo endereco:");
-			String novoEndereco = sc.next();
+			sc.nextLine();
+			String novoEndereco = sc.nextLine();
 			consumidor.setEndereco(novoEndereco);
 			result = true;
 			break;
 		case 7:
 			System.out.println("Digite a nova senha:");
-			String novaSenha = sc.next();
-			consumidor.setSenha(novaSenha);
-			result = true;
+			sc.nextLine();
+			String novaSenha = sc.nextLine();
+			if (!(novaSenha.length() < 4) && !(novaSenha.length() > 8)) {
+				consumidor.setSenha(novaSenha);
+				result = true;
+			} else {
+				result = false;
+			}
 			break;
 		case 8:
 			System.out.println("Digite o novo celular:");
-			String celular = sc.next();
+			sc.nextLine();
+			String celular = sc.nextLine();
 			consumidor.setCelular(celular);
 			result = true;
-			break;			
+			break;
+		default: 
+			System.out.println("Opcao Invalida!");
 		}
 		return result;
 	}
+
 // Criar Reclamação
-	private static boolean criarReclamação(UsuarioConsumidor consumidor){
+	private static boolean criarReclamação(UsuarioConsumidor consumidor) {
+		sc.nextLine();
 		System.out.println("Digite o Nome da empresa:");
-		String nomeEmpresa = sc.next();
+		String nomeEmpresa = sc.nextLine();
 		System.out.println();
-		System.out.println("Digite um título para a reclamação:");
-		String titulo = sc.next();
+		System.out.println("Digite um titulo para a reclamacao:");
+		String titulo = sc.nextLine();
 		System.out.println();
-		System.out.println("Digite a descrição da reclamação:");
-		String descricao = sc.next();
+		System.out.println("Digite a descricao da reclamacao:");
+		String descricao = sc.nextLine();
 		System.out.println();
 		System.out.println("Digite um celular para contato:");
-		String celular = sc.next();
+		String celular = sc.nextLine();
 		System.out.println();
-		System.out.println("Digite uma classificação:");
-		String classificao = sc.next();
+		System.out.println("Digite uma classificacao:");
+		String classificao = sc.nextLine();
 		System.out.println();
-		System.out.println("Digite se é produto ou serviço:");
-		String produtoOuServico = sc.next();
+		System.out.println("Digite o produto ou servico:");
+		String produtoOuServico = sc.nextLine();
 		System.out.println();
-		System.out.println("Digite uma nota:");
-		String numero = sc.next();
+		System.out.println("Digite uma nota (0-10):");
+		String numero = sc.nextLine();
 		System.out.println();
 		double nota = Double.parseDouble(numero);
-		Reclamacao reclamacao = new Reclamacao(nomeEmpresa, titulo, descricao, celular, 
-		classificao, produtoOuServico, "Pendente", nota, null);
-		if(reclamacao != null){
+		Reclamacao reclamacao = new Reclamacao(nomeEmpresa, titulo, descricao, celular, classificao, produtoOuServico,
+				"Pendente", nota, null, consumidor.getNome());
+		if ((0 <= reclamacao.getNota()) && (reclamacao.getNota() <= 10)) {
+			consumidor.getReclamacao().add(reclamacao);
+			for(int i = 0; i < conta.getEmpresasExistentes().size(); i++) {
+				if(conta.getEmpresasExistentes().get(i).getNome().equals(reclamacao.getNomeEmpresa())) {
+					conta.getEmpresasExistentes().get(i).getReclamacao().add(reclamacao);
+				}
+			}
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 }

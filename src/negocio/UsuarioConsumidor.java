@@ -73,12 +73,11 @@ public class UsuarioConsumidor extends Usuario{
 	@Override
 	public String exibirDados() {
 		return "NOME: " + nome
-				+ "\nENDECO: " + endereco
+				+ "\nENDERECO: " + endereco
 				+ "\nCPF: " + cpf
 				+ "\nDATA DE NASCIMENTO: " + dataNascimento
 				+ "\nGENERO: " + genero
 				+ "\nCELULAR: " + celular
-				+ "\nENDEREÇO: " + endereco
 				+ "\nEMAIL: " + email;
 	}
 	
@@ -106,16 +105,35 @@ public class UsuarioConsumidor extends Usuario{
 
 	@Override
 	public String filtrarReclamacoesResp() {
-		// TODO Auto-generated method stub
-		return null;
+		String filtro = "";
+		for(int i = 0; i < reclamacao.size(); i++) {
+			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Respondida")) {
+				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
+			}
+		}
+		if(filtro == "") {
+			return "Nao ha reclamacoes respondidas";
+		} else {
+			return filtro;
+		
+		}
 	}
 
 
 
 	@Override
 	public String filtrarReclamacoesNResp() {
-		// TODO Auto-generated method stub
-		return null;
+		String filtro = "";
+		for(int i = 0; i < reclamacao.size(); i++) {
+			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Pendente")) {
+				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
+			}
+		}
+		if(filtro == "") {
+			return "Nao ha reclamacoes pendentes";
+		} else {
+			return filtro;
+		}
 	}
 	
 	

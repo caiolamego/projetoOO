@@ -104,9 +104,9 @@ public class Conta {
             List<Reclamacao> reclamacoesDoUsuario = usuario.getReclamacoes();
 
             if (reclamacoesDoUsuario.isEmpty()) {
-                return "Este usuário não possui reclamações";
+                return "Este usuario nao possui reclamacoes";
             } else {
-                String recConsumidor = "Reclamacoes da empresa " + nomeUsuario + ":\n";
+                String recConsumidor = "Reclamacoes do usuario " + nomeUsuario + ":\n";
 			    String textoRec = "";
                 for (Reclamacao reclamacao : reclamacoesDoUsuario) {
                     textoRec = textoRec + reclamacao.getTitulo() + "\n";
@@ -122,8 +122,8 @@ public class Conta {
 	public String listarReclamacoesDaEmpresa(String nomeEmpresa) {
 		List<Reclamacao> reclamacoesDaEmpresa = new ArrayList<>();
 	
-		for (Usuario usuario : contasExistentes) {
-			List<Reclamacao> reclamacoes = new ArrayList<>(usuario.getReclamacoes());
+		for (UsuarioConsumidor consumidor : consumidoresExistentes) {
+			List<Reclamacao> reclamacoes = new ArrayList<>(consumidor.getReclamacao());
 	
 			for (Reclamacao reclamacao : reclamacoes) {
 				if (reclamacao.getNomeEmpresa().equalsIgnoreCase(nomeEmpresa)) { 
@@ -136,8 +136,7 @@ public class Conta {
 			String recEmpresa = "Reclamacoes da empresa " + nomeEmpresa + ":\n";
 			String textoRec = "";
 			for (Reclamacao reclamacao : reclamacoesDaEmpresa) {
-				textoRec = textoRec + reclamacao.getTitulo() + "\n";
-				System.out.println(reclamacoesDaEmpresa.size()); // 
+				textoRec = textoRec + reclamacao.getTitulo() + "\n"; 
 			}
 			return recEmpresa + textoRec + "\n";
 		} else {
@@ -196,6 +195,10 @@ public class Conta {
 					"DataNascimento" + s, g,"Celular" + s);
 			consumidoresExistentes.add(consumidor);
             contasExistentes.add(consumidor);
+            Reclamacao reclamacao = new Reclamacao("Nome" + s, "Titulo" + s,"Descricao" + s,"Celular" + s,"Classificacao" + s,
+            		"ProdutoOuServico" + s,"Pendente", i, "Resposta" + s, "Nome" + s);
+            empresa.getReclamacao().add(reclamacao);
+            consumidor.getReclamacao().add(reclamacao);
 		}
 		
 	}

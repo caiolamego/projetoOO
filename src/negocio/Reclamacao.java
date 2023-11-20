@@ -12,10 +12,11 @@ public class Reclamacao {
 	private String status = "Pendente";
 	private double nota;
 	private String resposta;
+	private String nomeConsumidor;
 
 	
 	public Reclamacao(String nomeEmpresa, String titulo, String descricao, String celular, String classificacao,
-			String produtoOuServico, String status, double nota, String resposta) {
+			String produtoOuServico, String status, double nota, String resposta, String nomeConsumidor) {
 		this.nomeEmpresa = nomeEmpresa;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -25,6 +26,7 @@ public class Reclamacao {
 		this.status = status;
 		this.nota = nota;
 		this.resposta = resposta;
+		this.nomeConsumidor = nomeConsumidor;
 	}
 
 	public String getNomeEmpresa() {
@@ -101,6 +103,15 @@ public class Reclamacao {
 	public void setResposta(String resposta) {
 		this.resposta = resposta;
 	}
+	
+
+	public String getNomeConsumidor() {
+		return nomeConsumidor;
+	}
+
+	public void setNomeConsumidor(String nomeConsumidor) {
+		this.nomeConsumidor = nomeConsumidor;
+	}
 
 	public String exibirReclamacao() {
 		if(status == "Pendente") {
@@ -119,6 +130,14 @@ public class Reclamacao {
 					+ "\nSTATUS: " + status
 					+ "\nRESPOSTA: " + resposta;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Reclamacao [nomeEmpresa=" + nomeEmpresa + ", titulo=" + titulo + ", descricao=" + descricao
+				+ ", celular=" + celular + ", classificacao=" + classificacao + ", produtoOuServico=" + produtoOuServico
+				+ ", status=" + status + ", nota=" + nota + ", resposta=" + resposta + ", nomeConsumidor="
+				+ nomeConsumidor + "]";
 	}
 	
 	

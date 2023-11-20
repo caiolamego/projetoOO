@@ -132,12 +132,12 @@ public class UsuarioEmpresa extends Usuario{
 	public String filtrarReclamacoesResp() {
 		String filtro = "";
 		for(int i = 0; i < reclamacao.size(); i++) {
-			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Respondida")) {
+			if(!(reclamacao.get(i).getStatus().equalsIgnoreCase("Pendente"))) {
 				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
 			}
 		}
 		if(filtro == "") {
-			return "Nao ha reclamacoes respondidas";
+			return  "Nao ha reclamacoes respondidas";
 		} else {
 			return filtro;
 		}
