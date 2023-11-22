@@ -32,7 +32,8 @@ public class Program {
 				System.out.println("Deseja retornar ao menu inicial? (y/n)");
 				if (sc.next().charAt(0) == 'y') {
 					break;
-				} else {
+				} 
+				else {
 					op = 0;
 					System.out.println("O sistema sera encerrado!");
 				}
@@ -62,6 +63,7 @@ public class Program {
 						break;
 					}
 				} else {
+					op2 = -1;
 					while (op2 != 0) {
 						System.out.println(imprimirOpcoesEmpresa());
 						op2 = sc.nextInt();
@@ -288,6 +290,33 @@ public class Program {
 							}
 
 						case 7:
+							String listaRec = conta.listarReclamacoesDoUsuario(consumidor.getNome());
+							System.out.println(listaRec);
+							System.out.println("Digite o titulo da Reclamacao que deseja alterar:");
+							sc.nextLine();
+							String tituloRec = sc.nextLine();
+							Reclamacao reclamacaoEd = verificarExistenciaRec(tituloRec, consumidor);
+							if(reclamacaoEd != null) {
+								boolean recEditada = mudarReclamacao(reclamacaoEd);
+								System.out.println(reclamacaoEd.editarReclamacao(recEditada));
+							} else {
+								System.out.println("Reclamacao nao encontrada ou ja resondida!");
+							}
+							
+							System.out.println();
+							System.out.println("Deseja retornar ao menu de opcoes? (y/n)");
+							if (sc.next().charAt(0) == 'y') {
+								break;
+							} else {
+								op = 0;
+								opConsumidor = 0;
+								System.out.println("O sistema sera encerrado!");
+								break;
+							}
+							
+							
+
+						case 8:
 							System.out.println("Digite sua senha");
 							String senha = sc.next();
 							if (senha.equals(consumidor.getSenha())) {
@@ -343,12 +372,6 @@ public class Program {
 			}
 
 		}
-
-		for (int i = 0; i < conta.getConsumidoresExistentes().size(); i++) {
-			System.out.println(conta.getConsumidoresExistentes().get(i).toString());
-		}
-
-		sc.close();
 	}
 
 // Menu inicial
@@ -414,7 +437,7 @@ public class Program {
 		cpf = sc.nextLine();
 		System.out.println("Email:");
 		email = sc.nextLine();
-		System.out.println("Data de nascimento:");
+		System.out.println("Data de nascimento (dd/mm/yyyy):");
 		dataNascimento = sc.nextLine();
 		System.out.println("Genero (m/f/o):");
 		genero = sc.nextLine().charAt(0);
@@ -517,7 +540,8 @@ public class Program {
 		opcoesConsumidor = opcoesConsumidor + "4 - Criar Reclamacao \n";
 		opcoesConsumidor = opcoesConsumidor + "5 - Pesquisar Qualquer Reclamacao\n";
 		opcoesConsumidor = opcoesConsumidor + "6 - Filtrar Reclamacao\n";
-		opcoesConsumidor = opcoesConsumidor + "7 - excluir conta";
+		opcoesConsumidor = opcoesConsumidor + "7 - Editar Reclamacao\n";
+		opcoesConsumidor = opcoesConsumidor + "8 - excluir conta";
 		return opcoesConsumidor;
 	}
 
@@ -538,7 +562,7 @@ public class Program {
 		System.out.println("Escreva o titulo da reclamacao que deseja ver: ");
 		sc.nextLine();
 		String titulo = sc.nextLine();
-		
+
 		for (int i = 0; i < consumidor.getReclamacao().size(); i++) {
 			if (consumidor.getReclamacao().get(i).getTitulo().equals(titulo)) {//
 				return consumidor.getReclamacao().get(i).exibirReclamacao();
@@ -605,14 +629,14 @@ public class Program {
 			System.out.println("Digite a nova senha:");
 			sc.nextLine();
 			String novaSenha = sc.nextLine();
-			if (novaSenha.length() < 4 || novaSenha.length() > 8) {
+			if (!(novaSenha.length() < 4 )&& !(novaSenha.length() > 8)) {
 				empresa.setSenha(novaSenha);
 				result = true;
 			} else {
 				result = false;
 			}
 			break;
-		default: 
+		default:
 			System.out.println("Opcao Invalida!");
 		}
 		return result;
@@ -659,7 +683,7 @@ public class Program {
 			sc.nextLine();
 			String genero = sc.nextLine();
 			char caractere = genero.charAt(0);
-			if (caractere != 'm' && caractere != 'f' && caractere != 'o') {
+			if (!(caractere != 'm') && !(caractere != 'f') && !(caractere != 'o')) {
 				consumidor.setGenero(caractere);
 				result = true;
 			} else {
@@ -698,10 +722,83 @@ public class Program {
 			consumidor.setCelular(celular);
 			result = true;
 			break;
-		default: 
+		default:
 			System.out.println("Opcao Invalida!");
 		}
 		return result;
+	}
+
+	private static boolean mudarReclamacao(Reclamacao reclamacao) {
+		System.out.println(reclamacao.exibirReclamacao());
+		System.out.println("Digite o valor correspondente ao dado que deseja mudar:" + "\n0 - Nao desejo mais editar!"
+				+ "\n1 - Titulo" + "\n2 - Descricao" + "\n3 - Celular" + "\n4 - Classificacao"
+				+ "\n5 - Produto ou Servico" + "\n6 - Nota");
+		int option = -1;
+		option = sc.nextInt();
+		boolean result = false;
+		switch (option) {
+		case 0:
+			break;
+		case 1:
+			System.out.println("Digite o novo Titulo:");
+			sc.nextLine();
+			String novoTitulo = sc.nextLine();
+			reclamacao.setTitulo(novoTitulo);
+			;
+			result = true;
+			break;
+		case 2:
+			System.out.println("Digite a nova Descricao:");
+			sc.nextLine();
+			String novaDesc = sc.nextLine();
+			reclamacao.setDescricao(novaDesc);
+			result = true;
+			break;
+		case 3:
+			System.out.println("Digite o novo Celular:");
+			sc.nextLine();
+			String novoCel = sc.nextLine();
+			reclamacao.setCelular(novoCel);
+			result = true;
+			break;
+		case 4:
+			System.out.println("Digite a nova Classificacao:");
+			sc.nextLine();
+			String classificacao = sc.nextLine();
+			reclamacao.setClassificacao(classificacao);
+			;
+			result = true;
+			break;
+		case 5:
+			System.out.println("Digite o novo Produto ou Servico:");
+			sc.nextLine();
+			String prodOuServ = sc.nextLine();
+			reclamacao.setProdutoOuServico(prodOuServ);
+			;
+			result = true;
+			break;
+		case 6:
+			System.out.println("Digite a nova nota:");
+			sc.nextLine();
+			double novaNota = sc.nextDouble();
+			reclamacao.setNota(novaNota);
+			;
+			result = true;
+			break;
+		default:
+			System.out.println("Opcao Invalida!");
+		}
+		return result;
+	}
+
+	public static Reclamacao verificarExistenciaRec(String titulo, UsuarioConsumidor consumidor) {
+		for (int i = 0; i < consumidor.getReclamacao().size(); i++) {
+			if (consumidor.getReclamacao().get(i).getTitulo().equals(titulo)
+					&& consumidor.getReclamacao().get(i).getStatus().equals("Pendente")) {
+				return consumidor.getReclamacao().get(i);
+			}
+		}
+		return null;
 	}
 
 // Criar Reclamação
@@ -733,8 +830,8 @@ public class Program {
 				"Pendente", nota, null, consumidor.getNome());
 		if ((0 <= reclamacao.getNota()) && (reclamacao.getNota() <= 10)) {
 			consumidor.getReclamacao().add(reclamacao);
-			for(int i = 0; i < conta.getEmpresasExistentes().size(); i++) {
-				if(conta.getEmpresasExistentes().get(i).getNome().equals(reclamacao.getNomeEmpresa())) {
+			for (int i = 0; i < conta.getEmpresasExistentes().size(); i++) {
+				if (conta.getEmpresasExistentes().get(i).getNome().equals(reclamacao.getNomeEmpresa())) {
 					conta.getEmpresasExistentes().get(i).getReclamacao().add(reclamacao);
 				}
 			}
