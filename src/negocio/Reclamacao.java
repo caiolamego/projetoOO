@@ -125,7 +125,7 @@ public class Reclamacao {
 			return "TITULO: " + titulo
 					+ "\nEMPRESA: " + nomeEmpresa
 					+ "\nDESCRICAO: " + descricao
-					+ "\nPRODUTO OU SERVICO: " + produtoOuServico
+					+ "PRODUTO OU SERVICO: " + produtoOuServico
 					+ "\nNOTA: " + nota
 					+ "\nSTATUS: " + status
 					+ "\nRESPOSTA: " + resposta;
@@ -140,13 +140,7 @@ public class Reclamacao {
 				+ nomeConsumidor + "]";
 	}
 	
-	public String editarReclamacao(boolean option) {
-		if(option == true) {
-			return "Reclamacao atualizada com sucesso!";
-		} else {
-			return "Reclamacao nao atualizada!";
-		}
-	}
+	
 	
 
 	

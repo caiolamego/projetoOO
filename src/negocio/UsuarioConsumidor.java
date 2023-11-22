@@ -107,7 +107,7 @@ public class UsuarioConsumidor extends Usuario{
 	public String filtrarReclamacoesResp() {
 		String filtro = "";
 		for(int i = 0; i < reclamacao.size(); i++) {
-			if(!(reclamacao.get(i).getStatus().equalsIgnoreCase("Pendente"))) {
+			if(reclamacao.get(i).getStatus().equalsIgnoreCase("Respondida")) {
 				filtro = filtro + " \n" + reclamacao.get(i).getTitulo();
 			}
 		}
